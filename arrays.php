@@ -10,7 +10,7 @@ echo'<br><br>';
 
 $element = 'Helium';
 
-if ($atomic[$element]==true) {
+if (!empty($atomic[$element])) {
     echo $element.'\'s atomic number is '.$atomic[$element].'.';
 } else {
     echo 'Sorry, that element has not been found in the database, please check your spelling and try again.';
@@ -21,8 +21,8 @@ $properties = Array('Hydrogen'=>Array('Atomic number'=> 1, 'Weight'=> 1, 'Group 
                     'Lithium'=>Array('Atomic number'=> 3, 'Weight'=> 7, 'Group number'=> 1, 'Period number'=> 2),
                     'Beryllium'=>Array('Atomic number'=> 4, 'Weight'=> 9, 'Group number'=> 2, 'Period number'=> 2));
 
-$request = 40;
-if ($properties[$element]!=true) {
+$request = 4;
+if (empty($properties[$element])) {
     echo 'Sorry, that element has not been found in the database, please check your spelling and try again.';
 } else {
     switch($request){
