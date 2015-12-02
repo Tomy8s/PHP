@@ -1,32 +1,53 @@
 <?php
 $rows = intval($_GET['rows']);
+$rowno = 1;
 $cols = intval($_GET['columns']);
+$colno = 1;
 if (($rows < 1) || ($cols < 1)) {
     ?>
     <P>Please enter an interger above 0.<br>
     <a href="./grid_params.php">Re-enter grid parameters.</a></P>
 <?php
 } else {
-    echo '<p>Your grid has '.$rows.' rows and '.$cols.' columns.</p><p style="font-family: \'Lucidia-Console\', monospace">';
-    while ($rows > 0) {
-        $cols = intval($_GET['columns']);
-        while ($cols > 0) {
-            echo '+--';
-            $cols --;
+    echo '<p>Your grid has '.$rows.' rows and '.$cols.' columns.</p><p style="font-family: \'Lucidia-Console\', monospace">&nbsp&nbsp&nbsp';
+    while ($colno <= $cols) {
+        if ($colno < 10) {
+            echo '&nbsp'.$colno.'&nbsp';
+        } else if ($colno < 100) {
+            echo '&nbsp'.$colno;
+        } else {
+            echo '&nbsp#&nbsp';
         }
-        $cols = intval($_GET['columns']);
-        echo '+<br>';
-        while ($cols > 0) {
-            echo '|&nbsp&nbsp';
-            $cols --;
-        }
-        echo '|<br>';
-        $rows --;
+        $colno ++;
     }
-    $cols = intval($_GET['columns']);
-    while ($cols > 0) {
+    echo '<br>&nbsp&nbsp&nbsp';
+    while ($rowno <= $rows) {
+        $colno = 1;
+        while ($colno <= $cols) {
+            echo '+--';
+            $colno ++;
+        }
+        if ($rowno < 10) {
+            echo '+<br>&nbsp&nbsp'.$rowno;
+        } else if ($rowno < 100) {
+            echo '+<br>&nbsp'.$rowno;
+        } else if ($rowno < 1000) {
+            echo $rowno;
+        } else {
+            echo '+<br>#';
+        }
+        $colno = 1;        
+        while ($colno <= $cols) {
+            echo '|&nbsp&nbsp';
+            $colno ++;
+        }        
+        echo '|<br>&nbsp&nbsp&nbsp';
+        $rowno ++;
+    }
+    $colno = 1;
+    while ($colno <= $cols) {
         echo '+--';
-        $cols --;
+        $colno ++;
     }
     echo '+</p>';
 }
