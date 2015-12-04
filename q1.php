@@ -1,4 +1,7 @@
 <?php
-echo time();
-echo '<br>';
-echo time("Y-M-D h:i:sa","");
+    $neicells = array(
+        $_POST[$rowno-1 .','.$colno-1],
+        $_POST[$rowno-1 .','.$colno], $_POST[$rowno-1 .','.$colno+1],
+        $_POST[$rowno.','.$colno-1], $_POST[$rowno.','.$colno+1],
+        $_POST[$rowno+1 .','.$colno-1], $_POST[$rowno+1 .','.$colno], $_POST[$rowno+1 .','.$colno+1]);
+    echo $neicells;
