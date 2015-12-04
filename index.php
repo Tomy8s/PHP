@@ -1,8 +1,9 @@
+<h1><u><b>Welcome</b></u></h1>
+Contents of the current directory:
+<ul>
 <?php
-$x = 1;
-while ($x != 11){
-echo "$x";
-if ($x != 10)
-echo ", ";
-$x++;}
+    foreach (scandir('.') as $page) {
+        echo "<li><a href=\"$page\">$page</a></li>";
+    }
 ?>
+</ul>
