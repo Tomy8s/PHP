@@ -1,3 +1,4 @@
+<!--by T. Yates-->
 <?php
 $rows = intval($_GET['rows']);
 $rowno = 1;
@@ -52,5 +53,5 @@ if (($rows < 1) || ($cols < 1)) {
         <input type="submit" value="Next generation"></form></p></p>
     <?php
 }
-
 ?>
+<!--by T. Yates-->
