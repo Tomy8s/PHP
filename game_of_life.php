@@ -90,7 +90,7 @@ if (($rows < 1) || ($cols < 1)) {
         <!--<input type=submit value="Previous generation">-->
         Current generation: <?php echo $gen -1;?>
         <input type="hidden" value="<?php echo $gen;?>" name="gen">
-        <input type="submit" value="Next generation"></form></p></p>
+        <input type="submit" value="Next generation" autofocus></form></p></p>
     <?php
 }
 ?>
