@@ -1,17 +1,16 @@
 <!--by T. Yates-->
+<head>
+<link rel="stylesheet" type="text/css" href="game_of_life.css">
+</head>
 <?php
-$rows = intval($_GET['rows']);
+$rows = abs(intval($_GET['rows']));
 $rowno = 1;
-$cols = intval($_GET['columns']);
+$cols = abs(intval($_GET['columns']));
 $colno = 1;
-if (isset($_POST['gen'])) {
-    $gen = intval($_POST['gen']);
-} else {
-    $gen = 0;
-}
+$gen = isset($_POST['gen']) ? $_POST['gen'] : 0;
 $gen ++;
-if (isset($_GET['random']) && (intval($_GET['live']) > 0) && (intval($_GET['live']) <= ($rows * $cols))) {
-    $live = intval($_GET['live']);
+if (isset($_GET['live']) && is_numeric($_GET['live'])) {
+    $live = abs(intval($_GET['live']));
 } else if (isset($_GET['random'])) {
     $live = rand(1, $rows * $cols);
 }
@@ -19,13 +18,17 @@ if (isset($_GET['random']) && (intval($_GET['live']) > 0) && (intval($_GET['live
 if (($rows < 1) || ($cols < 1)) {
     ?>
     <P>Please enter an interger above 0.<br>
-    <a href="./grid_params.html">Re-enter grid parameters.</a></P>
+    <a href="./game_of_life.html">Re-enter grid parameters.</a></P>
+<?php
+} else if (isset($_GET['live']) && $live > ($rows * $cols)) {
+    ?>
+    <P>Please enter a number on live squares between 0 and the total number of cells (<?php $rows * $cols ?>).<br>
+    <a href="./game_of_life.html">Re-enter grid parameters.</a></P>
 <?php
 } else {?>
-    <p>Your grid has <?php echo $rows;?> rows and <?php echo $cols;?> columns.</p><p style="font-family: 'Lucidia-Console', monospace" align="center">
+    <p>Your grid has <?php echo $rows;?> rows and <?php echo $cols;?> columns.</p><p>
     <form action="game_of_life.php?rows=<?php echo $rows;?>&columns=<?php echo $cols;?>" method="post">
     <?php
-    echo $gen.' gen<br>';
 //Random cell generator
     if ($gen == 1 && isset($_GET['random'])) {
         $randomnos = array_fill(0, $live, NULL);
@@ -36,22 +39,10 @@ if (($rows < 1) || ($cols < 1)) {
             }
             $randomnos[$i] = $newrand;
         }
-        //$randkey = 0;
-        //print_r($randomnos);
-        //echo '<br>';
-        //foreach ($randomnos as $randkey => $randval) {
-        //    echo 'Value = '.$randval.' row = '.(intval($randval/$cols)+1).' col = '.($randval%$cols).'<br>';
-        //}
-        //echo $live.' live<br>';
         while ($rowno <= $rows) {
             $colno = 1;
             while ($colno <= $cols) {
-                echo '<input type="checkbox" name="'.$rowno.','.$colno.'"';
-                if (in_array(((($rowno-1)*$cols)+$colno), $randomnos)){
-                    echo ' checked>';
-                } else {
-                    echo '>';
-                }
+                echo '<input type="checkbox" name="', $rowno, ',', $colno, '"', (in_array(($rowno - 1)*$cols + $colno, $randomnos)) ? ' checked>' : '>';
                 $colno ++;
             }
             echo '<br>';
@@ -73,11 +64,7 @@ if (($rows < 1) || ($cols < 1)) {
                         $neino ++;
                     }
                 }
-                if (((isset($_POST[$rowno.','.$colno]) && ($neino == 2 || $neino == 3)) || (!isset($_POST[$rowno.','.$colno])&& $neino == 3))) {
-                    echo ' checked>';
-                } else {
-                    echo '>';
-                }
+                echo ($neino === 3 || isset($_POST[$rowno.','.$colno]) && $neino === 2)  ? ' checked>' : '>';
     //End of live/dead test
                 $colno ++;
             }
